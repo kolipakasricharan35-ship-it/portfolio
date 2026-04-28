@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akhil Teja | Full Stack Development Trainee</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-strong: #7dd3fc;
+      --border: rgba(148, 163, 184, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 30%),
+                  radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.14), transparent 25%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    .page-wrap {
+      width: min(1180px, calc(100% - 1.5rem));
+      margin: 0 auto;
+      padding: 1.75rem 0 3rem;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .mobile-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.88);
+      color: var(--accent-strong);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .mobile-toggle:hover {
+      transform: translateY(-1px);
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--accent-strong);
+    }
+
+    .hero {
+      display: grid;
+      gap: 2rem;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.86);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .tagline {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1.75rem;
+    }
+
+    .stat-card {
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      background: rgba(15, 23, 42, 0.82);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.45rem;
+      color: var(--accent-strong);
+      margin-bottom: 0.35rem;
+    }
+
+    section {
+      margin-top: 2.5rem;
+    }
+
+    section h2 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      color: #f8fafc;
+    }
+
+    .grid-2 {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    }
+
+    .card {
+      padding: 1.75rem;
+      border-radius: 1.5rem;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid var(--border);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-strong);
+      font-size: 0.92rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .skill-list,
+    .audience-list {
+      display: grid;
+      gap: 0.85rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .skill-list li,
+    .audience-list li {
+      padding: 1rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      background: rgba(30, 41, 59, 0.92);
+      color: var(--text);
+    }
+
+    .skill-list li strong,
+    .audience-list li strong {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: var(--accent-strong);
+    }
+
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+
+    .btn,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.95rem 1.35rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #0f172a;
+    }
+
+    .btn-secondary {
+      background: rgba(51, 65, 85, 0.88);
+      color: var(--text);
+    }
+
+    .btn:hover,
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+    }
+
+    .hidden-panel {
+      margin-top: 1rem;
+      padding: 1.2rem 1.3rem;
+      border-radius: 1.25rem;
+      background: rgba(30, 41, 59, 0.92);
+      border: 1px solid var(--border);
+      display: none;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        padding: 1.75rem;
+      }
+
+      .page-wrap {
+        padding-top: 1.5rem;
+        padding-bottom: 2.5rem;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .mobile-toggle {
+        display: inline-flex;
+      }
+
+      nav {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: stretch;
+        transition: max-height 0.3s ease;
+      }
+
+      nav.open {
+        max-height: 360px;
+      }
+
+      nav a {
+        padding: 0.85rem 0.75rem;
+        border-radius: 1rem;
+        background: rgba(30, 41, 59, 0.9);
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .page-wrap {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .hero {
+        padding: 1.5rem;
+      }
+
+      .tagline,
+      .card p,
+      .card ul {
+        font-size: 0.98rem;
+      }
+
+      .action-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn,
+      .btn-secondary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <header>
+      <a class="brand" href="#home">Akhil Teja</a>
+      <button class="mobile-toggle" id="menuToggle" aria-label="Open navigation menu">☰</button>
+      <nav id="mainNav">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#passion">Passion</a>
+        <a href="#audience">Audience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero" id="home">
+      <div>
+        <p class="pill">Full Stack Development Trainee</p>
+        <h1>Hi, I'm Akhil Teja.<br />I build dependable web experiences while learning full stack development for 1 year.</h1>
+        <p class="tagline">Focused on responsive UI, interactive JavaScript behavior, and reliable full stack workflows for startups and growing teams.</p>
+
+        <div class="quick-stats">
+          <div class="stat-card">
+            <strong>1 Year</strong>
+            <span>Hands-on learning in full stack development.</span>
+          </div>
+          <div class="stat-card">
+            <strong>React + Node</strong>
+            <span>Modern web architecture for client and server flow.</span>
+          </div>
+          <div class="stat-card">
+            <strong>UX-Driven</strong>
+            <span>Designing clear journeys for users and clients.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="card">
+      <h2>About Me</h2>
+      <p>I'm a dedicated learner and web developer with a year of active training in full stack development. My focus is on building accessible, responsive applications that solve real problems and grow with business needs.</p>
+      <div class="action-row">
+        <button class="btn" id="downloadResume">Download Resume</button>
+        <button class="btn-secondary" id="showPassion">Learn My Unique Skill</button>
+      </div>
+      <div class="hidden-panel" id="passionPanel">
+        <strong>Unique Skill:</strong>
+        <p>My unique professional strength is converting complex technical ideas into simple, shareable workflows. I enjoy mentoring peers and explaining code clearly, which makes collaboration faster and more effective.</p>
+      </div>
+    </section>
+
+    <section id="skills" class="grid-2">
+      <div class="card">
+        <h2>Core Skills</h2>
+        <ul class="skill-list">
+          <li><strong>Front-end</strong> HTML5, CSS3, JavaScript, responsive layouts, React fundamentals</li>
+          <li><strong>Back-end</strong> Node.js, Express, REST APIs, database integration</li>
+          <li><strong>Development</strong> Git, VS Code, debugging, agile teamwork</li>
+          <li><strong>Design</strong> UI consistency, mobile-first thinking, accessible interfaces</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Learning Focus</h2>
+        <p>My current training emphasizes building full stack web applications with clean architecture, reusable components, and maintainable code. I practice end-to-end development from layout and styling to server logic and deployment readiness.</p>
+      </div>
+    </section>
+
+    <section id="passion" class="card">
+      <h2>Personal Passion</h2>
+      <p>I'm passionate about creating code that people can understand and use easily. I enjoy turning design ideas into interactive experiences and learning new ways to make web apps feel reliable and smooth.</p>
+      <p>Solving problems with thoughtful structure, reusable solutions, and strong communication gives me energy every day.</p>
+    </section>
+
+    <section id="audience" class="card">
+      <h2>Target Audience</h2>
+      <ul class="audience-list">
+        <li><strong>Startups</strong> looking for a motivated junior developer who can grow with their product.</li>
+        <li><strong>Mentors & Teams</strong> seeking a trainee with strong learning momentum and clear technical communication.</li>
+        <li><strong>Project leads</strong> who want dependable support for web development, UI updates, or new feature builds.</li>
+      </ul>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+      <p>Interested in working together or reviewing my project progress? Reach out and let's discuss how I can contribute to your next web initiative.</p>
+      <p>Email: <a href="mailto:akhilteja153@gmail.com" style="color: var(--accent-strong); text-decoration: underline;">akhilteja153@gmail.com</a></p>
+    </section>
+
+    <footer>
+      <p>Designed by Akhil Teja — Full Stack Development Trainee.</p>
+    </footer>
+  </div>
+
+  <script>
+    const navLinks = document.querySelectorAll('nav a');
+    const mainNav = document.getElementById('mainNav');
+    const menuToggle = document.getElementById('menuToggle');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        navLinks.forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
+        if (mainNav.classList.contains('open')) {
+          mainNav.classList.remove('open');
+        }
+      });
+    });
+
+    menuToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
+    });
+
+    document.getElementById('showPassion').addEventListener('click', () => {
+      const panel = document.getElementById('passionPanel');
+      const isVisible = panel.style.display === 'block';
+      panel.style.display = isVisible ? 'none' : 'block';
+      document.getElementById('showPassion').textContent = isVisible ? 'Learn My Unique Skill' : 'Hide Unique Skill';
+    });
+
+    document.getElementById('downloadResume').addEventListener('click', () => {
+      const resumeLink = document.createElement('a');
+      resumeLink.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('Akhil Teja - Full Stack Development Trainee\n\nSkills:\n- HTML, CSS, JavaScript\n- React, Node.js, Express\n- Responsive development and collaboration');
+      resumeLink.download = 'AkhilTeja_Resume.txt';
+      resumeLink.click();
+    });
+  </script>
+</body>
+</html>
